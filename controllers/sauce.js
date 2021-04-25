@@ -1,6 +1,6 @@
 const Sauce = require('../models/sauce')
-const jwt = require('jsonwebtoken')
 const fs = require('fs')
+const sauce = require('../models/sauce')
 
 exports.getSauce = (req, res, next) => {
 	Sauce.find()
@@ -53,3 +53,5 @@ exports.deleteSauce = (req, res, next) => {
 		})
 		.catch(error => res.status(500).json({ error }))
 }
+
+
