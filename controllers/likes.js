@@ -17,7 +17,7 @@ exports.likeSauce = (req, res, next) => {
 					if(sauce.usersLiked.includes(userId)) {
 						let index = sauce.usersLiked.indexOf(userId)
 						sauce.usersLiked.splice(index, 1)
-					} else { console.log('ici')
+					} else { 
 						let index = sauce.usersDisliked.indexOf(userId)
 						sauce.usersDisliked.splice(index, 1)
 					}
@@ -34,7 +34,6 @@ exports.likeSauce = (req, res, next) => {
 	
 		sauce.likes = sauce.usersLiked.length
 		sauce.dislikes = sauce.usersDisliked.length
-		//sauce.usersLiked.push(req.body.userId)
 		sauce.save()
 		.then(res.status(200).json({ message: ' Like ajouté! ' }))
 		.catch(error => res.status(400).json({ error }))})
