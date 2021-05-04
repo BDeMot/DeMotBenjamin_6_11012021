@@ -9,7 +9,9 @@ const sauceRoutes = require('./routes/sauce')
 
 const app = express()
 
-mongoose.connect('mongodb+srv://bdemot:symphonie@cluster0.t9pa6.mongodb.net/sopekocko?retryWrites=true&w=majority',
+require('dotenv').config()
+
+mongoose.connect(process.env.DB_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true

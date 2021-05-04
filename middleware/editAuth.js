@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
 			const decodedToken = jwt.verify(token, 'random_token_secret')
 			const userId = decodedToken.userId
 			if(createrId !== userId){
-				throw 'User Id non valable, l\'utilisateur ne peut éditer cette sauce'
+				throw 'L\'utilisateur ne peut éditer cette sauce'
 			} else {
 				next()
 			}
