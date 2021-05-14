@@ -4,6 +4,7 @@ const sauce = require('../models/sauce')
 
 exports.getSauce = (req, res, next) => {
 	Sauce.find()
+		.select('name imageUrl heat')
 		.then(sauces => res.status(200).json(sauces))
 		.catch(error => res.status(400).json({ error }))
 }
