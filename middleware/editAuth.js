@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
 		.then(sauce => {
 			const createrId = sauce.userId
 			const token = req.headers.authorization.split(' ')[1]
-			const decodedToken = jwt.verify(token, 'random_token_secret')
+			const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET)
 			const userId = decodedToken.userId
 			if(createrId !== userId){
 				throw 'L\'utilisateur ne peut éditer cette sauce'
