@@ -1,6 +1,6 @@
 const Sauce = require('../models/sauce')
 const fs = require('fs')
-const sauce = require('../models/sauce')
+const jwt = require('jsonwebtoken')
 
 exports.getSauce = (req, res, next) => {
 	Sauce.find()
@@ -24,10 +24,25 @@ exports.createSauce = (req, res, next) => {
 		.then(() => res.status(201).json({ message : 'Sauce ajoutée ! '}))
 		.catch( error => res.status(400).json({ error }))
 }
-
 exports.getOneSauce = (req, res, next) => {
+  const token = req.headers.authorization.split(' ')[1]
+  const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET)
+  const userId = decodedToken.userId
+
 	Sauce.findOne({ _id: req.params.id })
-		.then(sauce => res.status(200).json(sauce))
+		.select('description dislikes likes imageUrl mainPepper manufacturer name usersDisliked usersLiked userId')
+		.then(sauce =>  {
+      if(sauce.usersLiked.includes(userId)) {
+        sauce.usersLiked = userId
+        sauce.usersDisliked = []
+      } else if (sauce.usersDisliked.includes(userId)) {
+        sauce.usersDisliked = userId
+        sauce.usersLikesd = []
+      } else {
+        sauce.usersDisliked = []
+        sauce.usersLiked = []
+      }
+      res.status(200).json(sauce)})
 		.catch(error => res.status(404).json({ error }))
 }
 
